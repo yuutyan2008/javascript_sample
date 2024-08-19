@@ -78,3 +78,37 @@ html {
   .reset_btn {
     background: #e6e6e6;
   }
+  /* バリデーションプログラムを改修して、”Eメールが一致しません”というエラーメッセージをCSSで装飾してみましょう
+  contact_validation.cssファイルに、alertというclassを追加しておきます。*/
+  .alert {
+    color: #fff;
+    padding: 20px;
+    background: #d14539;
+  }
+  
+  /* ドロップダウンメニューを作成 */
+  .header_nav {
+    background: linear-gradient(90deg, #fff 20%, rgba(0,0,0,.6) 60%);
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  .drop_menu_btn {
+    height: 60px;
+  }
+  .drop_menu {
+    /* 通常は非表示、クリックした時に表示させたいメニュー */
+    display: none;
+    background: #42210b;
+  }
+  .drop_menu_item {
+    padding: 0 20px;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+  }

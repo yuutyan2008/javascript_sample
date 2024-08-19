@@ -19,3 +19,28 @@ window.onload = function() {
   };
   
   window.onload = confirmSubmit;
+
+  function emailValidation() {
+    const form = document.getElementById("form");  //getElementById()メソッドを使用し、formオブジェクトを取得
+    form.onsubmit = function() { //onsubmitを使用して、送信ボタンクリック時のイベントを登録
+      //formから<input>タグのname="email" name="email_confirm"で<input>要素を取得
+      //form.email.valueとすることで<input>要素のvalue属性を取得することができます
+      if(form.email.value !== form.email_confirm.value) { 
+        const element = document.createElement("p") //createElement()メソッドで<p>要素を作成
+        const message = document.createTextNode("Eメールが一致しません") //createTextNode()メソッドでテキストノードを作成し、
+        element.appendChild(message); //appendChild()メソッドで<p>要素に追加
+        form.appendChild(element); //appendChild()メソッドで、<form>要素に<p>要素を追加
+        element.classList.add("alert"); //エラーメッセージの要素を挿入した際に、alertclassを追加をする処理を追加
+        // return false;  //submitの処理をキャンセルしています
+        setTimeout(() => {
+          form.removeChild(element)
+        }, 3000)
+      } else {
+        form.submit();
+      }
+    };
+      }
+
+  
+  window.onload = emailValidation;
+  

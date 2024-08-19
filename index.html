@@ -5,10 +5,23 @@
     <title>JavaScript</title>
   </head>
   <body>
-    <div>
-      <h1>JavaScriptの学習</h1>
-      <p><strong>JavaScript</strong>とは何か</p>
+    <!-- jQuery使用 -->
+    <div id="parent">
+      <!-- <h1>要素にclassを追加 -->
+        <h1>JavaScriptの学習</h1>
+      <button id="btn">ターゲット</button>
+    
+      <!-- 非表示の要素を追加 -->
+      <p class="display_none">クリックされました！</p>
     </div>
+    <!-- classを追加 -->
+    <style>
+      .display_none {
+        display: none
+      }
+    </style>
+    <!-- jQueryを読み込む -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="javascripts/sample.js"></script>
   </body>
 </html>

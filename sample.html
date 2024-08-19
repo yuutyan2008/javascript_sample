@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery入門</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <p id="myParagraph">これは元のテキストです。</p>
+    <button id="changeTextBtn">テキストを変更</button>
+
+    <script>
+        // jQueryの準備が整ったら
+        $(document).ready(function() {
+            // ボタンがクリックされたときにテキストを変更
+            $("#changeTextBtn").click(function() {
+                $("#myParagraph").text("新しいテキスト#に変更されました！");
+                $("#myParagraph").css("color", "blue");
+            });
+        });
+    </script>
+</body>
+</html>
