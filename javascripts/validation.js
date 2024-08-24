@@ -1,46 +1,50 @@
-window.onload = function() {
-    // document.formsでHTMLの中のform要素が HTMLCollectionオブジェクト として取得できる
-    // HTMLCollectionオブジェクトの特徴であるhtml要素(form)の取得が可能
-    const forms = document.forms;
-    // elementsプロパティを参照することで、フォームの中の<input>タグや<textarea>タグの要素などを取得することができます。
-    console.log(forms[0].elements);
-  };
-  // 送信ボタンをクリックした時のイベントハンドラ
-  function confirmSubmit() {
-    const forms = document.forms;
-    forms[0].onsubmit = function(){
-      const name = forms[0].name.value; // お名前欄の内容を取得してname変数に格納する処理
-      // confirm()メソッドは「OK」ボタンをクリックした時はtrueが、「キャンセル」ボタンをクリックした時はfalseが返る
-      if (!(confirm("${name}さん、本当に送信しますか？"))) {
-        alert("キャンセルされました");
-        return false;
-      }
-    };
-  };
-  
-  window.onload = confirmSubmit;
+// 課題
+function emailValidation() {
+  const email_confirm = document.getElementById("email_confirm");
+  const email = document.getElementById("email");
 
-  function emailValidation() {
-    const form = document.getElementById("form");  //getElementById()メソッドを使用し、formオブジェクトを取得
-    form.onsubmit = function() { //onsubmitを使用して、送信ボタンクリック時のイベントを登録
-      //formから<input>タグのname="email" name="email_confirm"で<input>要素を取得
-      //form.email.valueとすることで<input>要素のvalue属性を取得することができます
-      if(form.email.value !== form.email_confirm.value) { 
-        const element = document.createElement("p") //createElement()メソッドで<p>要素を作成
-        const message = document.createTextNode("Eメールが一致しません") //createTextNode()メソッドでテキストノードを作成し、
-        element.appendChild(message); //appendChild()メソッドで<p>要素に追加
-        form.appendChild(element); //appendChild()メソッドで、<form>要素に<p>要素を追加
-        element.classList.add("alert"); //エラーメッセージの要素を挿入した際に、alertclassを追加をする処理を追加
-        // return false;  //submitの処理をキャンセルしています
-        setTimeout(() => {
-          form.removeChild(element)
-        }, 3000)
+    // 両方のフィールドが入力されていることを確認
+    if (email.value === "" || email_confirm.value === "") {
+      return; // どちらかが空なら、バリデーションを実行しない
+    }
+
+      // エラーメッセージ行が既に存在するかを確認
+  const existingErrorRow = document.getElementById("errorRow");
+
+  //確認フォームが入力フォームと一致しなければ,イベントを実施
+  if (email_confirm.value !== email.value) {
+    if (!existingErrorRow) { // エラーメッセージ行がまだ存在しない場合にのみ追加
+        // 親の<tr>要素を取得し、その親要素をたどって<table>全体を取得
+        const emailRow = email_confirm.closest("tr");  // email_confirmを囲んでいる<tr>要素を取得
+        const tableBody = emailRow.parentNode; // parentNodeプロパティで、自動生成された<tbody>を取得
+       // 新しい行を挿入してエラーメッセージを表示
+       //email_confirmを囲んでいる<tr>要素の親の、自動生成された<tbody>に対して、emailRowの次に行を追加
+      // rowIndexは、その行がテーブルの中で何番目にあるかを示す
+       const newRow = tableBody.insertRow(emailRow.rowIndex + 1); // 
+       //errorRowという名前は、「エラーメッセージを表示するための行」であることを示すために命名
+       newRow.setAttribute("id", "errorRow"); //setAttributeは、指定された要素(newRow)に新しい属性(name=id,value=errorRow)を追加する 
+        const newCell = newRow.insertCell(0);//insertCell() メソッドは、新しいセル (<td>) を表の行 (<tr>) に挿入
+
+        newCell.setAttribute("colspan", "2");//setAttributeは、指定された要素(newCell)に対しcolspanを実施(2個のセルを連結)
+        newCell.style.color = "#d14539";
+        newCell.textContent = "Eメールが一致しません";
+    
+        // Eメール(確認)の背景色を赤にする
+        email_confirm.style.backgroundColor = 'rgba(230,169,171,.5)'; 
+    }
+
       } else {
-        form.submit();
+        // エラーメッセージが表示されている場合は削除し、背景色をリセット
+        const existingErrorRow = document.getElementById("errorRow");
+        if (existingErrorRow) {
+          existingErrorRow.remove();
+        }
+        email_confirm.style.backgroundColor = ""; // 背景色をリセットして元に戻す
       }
-    };
-      }
+    }
 
-  
-  window.onload = emailValidation;
-  
+  //inputイベントが発生したときにemailValidationという関数を実行する
+  //ユーザーが入力を行うたびにリアルタイムでバリデーションが行われる
+    document.getElementById("email_confirm").addEventListener("input", emailValidation);
+    document.getElementById("email").addEventListener("input", emailValidation);
+
